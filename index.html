@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio Website</title>
+    <style>
+        body {
+            font-family: 'Arial Narrow Bold', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8;
+        }
+        header {
+            background-color: #2b545d;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        header h1 {
+            margin: 0;
+            transition: color 0.3s ease;
+        }
+        header:hover h1 {
+            color: #f4e6a1;
+        }
+        nav {
+            background-color: #5e548e;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s ease, transform 0.3s ease;
+            font-size: 16px;
+            position: relative;
+            padding: 5px 0;
+        }
+        nav a.active {
+            color: #f8e471;
+            font-weight: bold;
+        }
+        nav a.active::after {
+            width: 100%;
+            left: 0;
+        }
+        nav a:hover {
+            color: #f8e471;
+            transform: scale(1.1);
+        }
+        nav a::after {
+            content: '';
+            display: block;
+            height: 2px;
+            background: #f8e471;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            transition: width 0.3s ease, left 0.3s ease;
+        }
+        .section-container {
+            display: none;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 15px;
+            background-color: #b199c7;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .section-container.active {
+            display: block;
+        }
+        section h2 {
+            color: #5e548e;
+        }
+        .card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        .card img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            border: 3px solid #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        .card-content {
+            max-width: 60%;
+        }
+        .card-content p, .card-content ul {
+            margin: 0;
+        }
+        .about-card {
+            flex-direction: row-reverse;
+        }
+        .education-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .education-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+        }
+        footer {
+            background-color: #6c6ca8;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            margin: 20px 20px 0 20px;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #5e548e;
+            color: white;
+        }
+        .skill-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin: 10px;
+            text-align: center;
+            display: inline-block;
+            width: calc(33% - 40px); /* Adjusting for margin and padding */
+            box-sizing: border-box;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .skill-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        .skill-card i {
+            font-size: 40px; /* Increase the icon size */
+            color: #5e548e;
+        }
+        .contact-icons {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .contact-icons h3 {
+            margin-bottom: 20px;
+            color: #5e548e;
+        }
+        .contact-icons a {
+            margin: 10px 15px;
+            color: black;
+            font-size: 40px; /* Decrease the icon size */
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .contact-icons a:hover {
+            color: #5e548e;
+            transform: scale(1.1);
+        }
+        .project-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin: 10px;
+            text-align: center;
+            display: inline-block;
+            width: calc(33% - 40px); /* Adjusting for margin and padding */
+            box-sizing: border-box;
+        }
+        .project-card img {
+            width: 100%;
+            border-radius: 8px;
+            height: auto;
+        }
+        .project-card h3 {
+            margin: 10px 0;
+            color: #5e548e;
+        }
+        .project-card p {
+            color: #333;
+        }
+    </style>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body onload="initializePage()">
+<header>
+    <h1>Welcome To My Personal Website</h1>
+</header>
+
+<nav>
+    <a href="#about" onclick="showSection('about')">About</a>
+    <a href="#education" onclick="showSection('education')">Education</a>
+    <a href="#skill" onclick="showSection('skill')">Skill</a>
+    <a href="#project" onclick="showSection('project')">Project</a>
+    <a href="#contact" onclick="showSection('contact')">Contact</a>
+</nav>
+
+<div id="about" class="section-container">
+    <h2><u>About Me</u></h2>
+    <div class="card about-card">
+        <img src="DV photo.jpg" alt="My Photo" title="Suraj Kushwaha">
+        <div class="card-content">
+            <p>I am an enthusiastic, self-motivated, reliable, responsible, and hardworking individual. I thrive in team environments and am adaptable to challenging situations, equally comfortable working collaboratively or taking initiative independently.</p>
+            <ul>
+                <li>Name: Suraj Kushwaha</li>
+                <li>Address: Kalaiya-23, Bara, Nepal</li>
+                <li>Date Of Birth: 2005-04-06</li>
+                <li>Language: English, Hindi, Nepali, Bhojpuri</li>
+                <li>Hobbies: Travelling, Cooking, Reading Novels</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="education" class="section-container">
+    <h2><u>Education</u></h2>
+    <div class="education-card">
+        <img src="education.png" alt="Education Icon">
+        <div>
+            <h3>My Education Journey</h3>
+        </div>
+    </div>
+    <table>
+        <tr>
+            <th>Exam name</th>
+            <th>Year of Pass</th>
+            <th>Institution name</th>
+            <th>Percentage</th>
+        </tr>
+        <tr>
+            <td>S.E.E</td>
+            <td>2020</td>
+            <td>Galaxy Public School, Kalaiya-4, Bara, Nepal</td>
+            <td>97.5%</td>
+        </tr>
+        <tr>
+            <td>Secondary School</td>
+            <td>2022</td>
+            <td>National Infotech Secondary School, Birgunj, Parsa, Nepal</td>
+            <td>88.75%</td>
+        </tr>
+        <tr>
+            <td>Bachelor Of Technology</td>
+            <td>2026</td>
+            <td>SRM University-AP, Amravathi</td>
+            <td>N/A</td>
+        </tr>
+    </table>
+</div>
+
+<div id="skill" class="section-container">
+    <h2><u>Skill</u></h2>
+    <div class="skill-card">
+        <i class="fas fa-code"></i>
+        <h3>C++/C with DSA</h3>
+        <p>Proficient in C++ and C with Data Structures and Algorithms.</p>
+    </div>
+    <div class="skill-card">
+        <i class="fas fa-laptop-code"></i>
+        <h3>Web Development (Front-end)</h3>
+        <p>Experienced in HTML, CSS, JavaScript, and front-end frameworks.</p>
+    </div>
+    <div class="skill-card">
+        <i class="fas fa-object-group"></i>
+        <h3>OOPs (Object Oriented Programming) Using C++</h3>
+        <p>Strong understanding of OOP principles in C++.</p>
+    </div>
+    <div class="skill-card">
+        <i class="fas fa-database"></i>
+        <h3>SQL (Structured Query Language)</h3>
+        <p>Skilled in writing and optimizing SQL queries.</p>
+    </div>
+    <div class="skill-card">
+        <i class="fab fa-python"></i>
+        <h3>Python</h3>
+        <p>Proficient in Python programming for various applications.</p>
+    </div>
+</div>
+
+<div id="project" class="section-container">
+    <h2><u>Project</u></h2>
+    <div class="project-card">
+        <img src="flight route plan.webp" alt="Flight Route Planner">
+        <h3>Flight Route Planner Using Graph</h3>
+        <p>A project to plan flight routes using graph theory techniques.</p>
+    </div>
+    <div class="project-card">
+        <img src="scientific-calc.gif" alt="Scientific Calculator">
+        <h3>Stack-based Scientific Calculator</h3>
+        <p>A scientific calculator built using stack data structure.</p>
+    </div>
+    <div class="project-card">
+        <img src="what-is-atm-717x404.avif" alt="ATM Machine">
+        <h3>ATM Machine Using OOPs in C++</h3>
+        <p>An ATM machine simulation using Object-Oriented Programming principles in C++.</p>
+    </div>
+</div>
+
+<div id="contact" class="section-container">
+    <h2><u>Contact</u></h2>
+    <div class="contact-icons">
+        <h3>Get in Touch</h3>
+        <p>If you'd like to reach out, feel free to connect with me via LinkedIn, email, or phone. I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.</p>
+        <a href="https://www.linkedin.com/in/suraj-kushwaha-998ab8258/" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="mailto:prasadsoorajkushwaha45@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
+        <a href="tel:+917004202582" target="_blank"><i class="fas fa-phone"></i></a>
+    </div>
+</div>
+
+<footer>
+    <h3>&copy; 2024 Suraj Kushwaha All Rights Reserved.</h3>
+</footer>
+
+<script>
+    function showSection(sectionId) {
+        // Hide all sections
+        document.querySelectorAll('.section-container').forEach(section => {
+            section.classList.remove('active');
+        });
+        // Show the selected section
+        document.getElementById(sectionId).classList.add('active');
+        // Update navigation to indicate current section
+        document.querySelectorAll('nav a').forEach(link => {
+            link.classList.remove('active');
+        });
+        document.querySelector(`nav a[href="#${sectionId}"]`).classList.add('active');
+    }
+
+    function initializePage() {
+        showSection('about'); // Show 'About' section by default
+    }
+</script>
+</body>
+</html>
